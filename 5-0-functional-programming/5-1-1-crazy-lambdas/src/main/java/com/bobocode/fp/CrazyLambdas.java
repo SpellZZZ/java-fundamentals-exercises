@@ -5,6 +5,7 @@ import com.bobocode.util.ExerciseNotCompletedException;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.concurrent.RecursiveTask;
 import java.util.function.*;
 
 /**
@@ -46,7 +47,9 @@ public class CrazyLambdas {
      * @return function that repeats Strings
      */
     public static BiFunction<String, Integer, String> stringMultiplier() {
-        BiFunction<String, Integer, String> biFunction = (s, i) -> {return s.repeat(i);};
+        BiFunction<String, Integer, String> biFunction = (s, i) -> {
+            return s.repeat(i);
+        };
         return biFunction;
     }
 
@@ -101,7 +104,7 @@ public class CrazyLambdas {
      * @return square operation
      */
     public static IntUnaryOperator intSquareOperation() {
-        IntUnaryOperator square = (x) -> x*x;
+        IntUnaryOperator square = (x) -> x * x;
         return square;
     }
 
@@ -204,7 +207,7 @@ public class CrazyLambdas {
         BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> biFunction =
                 ((intUnaryOperator, intPredicate) -> {
                     IntUnaryOperator intUnaryOperatorReturn = (x) -> {
-                        if(intPredicate.test(x)) {
+                        if (intPredicate.test(x)) {
                             return intUnaryOperator.applyAsInt(x);
                         } else {
                             return x;
@@ -223,7 +226,15 @@ public class CrazyLambdas {
      * @return a high-order function that fetches a function from a function map by a given name or returns identity()
      */
     public static BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> functionLoader() {
-        throw new ExerciseNotCompletedException();
+        BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> biFunction =
+                (map, s) -> {
+                    if (map.containsKey(s)) {
+                        return map.get(s);
+                    } else {
+                        return (x) -> x;
+                    }
+                };
+        return biFunction;
     }
 
     /**
@@ -241,7 +252,8 @@ public class CrazyLambdas {
      * @return a comparator instance
      */
     public static <T, U extends Comparable<? super U>> Comparator<T> comparing(Function<? super T, ? extends U> mapper) {
-        throw new ExerciseNotCompletedException();
+        Comparator<T> tComparator = (x, y) -> mapper.apply(x).compareTo(mapper.apply(y));
+        return tComparator;
     }
 
     /**
@@ -261,7 +273,9 @@ public class CrazyLambdas {
      */
     public static <T, U extends Comparable<? super U>> Comparator<T> thenComparing(
             Comparator<? super T> comparator, Function<? super T, ? extends U> mapper) {
-        throw new ExerciseNotCompletedException();
+        Comparator<T> comparator1 = (x, y) -> comparator.compare(x, y) == 0 ? mapper.apply(x)
+                .compareTo(mapper.apply(y)) : comparator.compare(x, y);
+        return comparator1;
     }
 
     /**
