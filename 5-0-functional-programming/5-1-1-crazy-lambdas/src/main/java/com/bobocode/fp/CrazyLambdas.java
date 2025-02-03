@@ -46,7 +46,8 @@ public class CrazyLambdas {
      * @return function that repeats Strings
      */
     public static BiFunction<String, Integer, String> stringMultiplier() {
-        throw new ExerciseNotCompletedException();
+        BiFunction<String, Integer, String> biFunction = (s, i) -> {return s.repeat(i);};
+        return biFunction;
     }
 
     /**
@@ -56,7 +57,8 @@ public class CrazyLambdas {
      * @return function that converts adds dollar sign
      */
     public static Function<BigDecimal, String> toDollarStringFunction() {
-        throw new ExerciseNotCompletedException();
+        Function<BigDecimal, String> function = x -> "$" + x.toPlainString();
+        return function;
     }
 
     /**
@@ -68,7 +70,8 @@ public class CrazyLambdas {
      * @return a string predicate
      */
     public static Predicate<String> lengthInRangePredicate(int min, int max) {
-        throw new ExerciseNotCompletedException();
+        Predicate<String> predicate = s -> s.length() >= min && s.length() <= max;
+        return predicate;
     }
 
     /**
@@ -77,7 +80,8 @@ public class CrazyLambdas {
      * @return int supplier
      */
     public static IntSupplier randomIntSupplier() {
-        throw new ExerciseNotCompletedException();
+        IntSupplier randomInt = () -> (int) (Math.random() * 100) + 1;
+        return randomInt;
     }
 
 
@@ -87,7 +91,8 @@ public class CrazyLambdas {
      * @return int operation
      */
     public static IntUnaryOperator boundedRandomIntSupplier() {
-        throw new ExerciseNotCompletedException();
+        IntUnaryOperator randomInt = (x) -> (int) (Math.random() * x);
+        return randomInt;
     }
 
     /**
@@ -96,7 +101,8 @@ public class CrazyLambdas {
      * @return square operation
      */
     public static IntUnaryOperator intSquareOperation() {
-        throw new ExerciseNotCompletedException();
+        IntUnaryOperator square = (x) -> x*x;
+        return square;
     }
 
     /**
@@ -105,7 +111,8 @@ public class CrazyLambdas {
      * @return binary sum operation
      */
     public static LongBinaryOperator longSumOperation() {
-        throw new ExerciseNotCompletedException();
+        LongBinaryOperator sum = (x, y) -> x + y;
+        return sum;
     }
 
     /**
@@ -114,7 +121,8 @@ public class CrazyLambdas {
      * @return string to int converter
      */
     public static ToIntFunction<String> stringToIntConverter() {
-        throw new ExerciseNotCompletedException();
+        ToIntFunction<String> toIntFunction = (s) -> Integer.valueOf(s);
+        return toIntFunction;
     }
 
     /**
@@ -125,7 +133,8 @@ public class CrazyLambdas {
      * @return a function supplier
      */
     public static Supplier<IntUnaryOperator> nMultiplyFunctionSupplier(int n) {
-        throw new ExerciseNotCompletedException();
+        Supplier<IntUnaryOperator> supplier = () -> (x) -> x * n;
+        return supplier;
     }
 
     /**
@@ -134,7 +143,8 @@ public class CrazyLambdas {
      * @return function that composes functions with trim() function
      */
     public static UnaryOperator<Function<String, String>> composeWithTrimFunction() {
-        throw new ExerciseNotCompletedException();
+        UnaryOperator<Function<String, String>> unaryOperator = (func) -> (s) -> func.apply(s.trim());
+        return unaryOperator;
     }
 
     /**
