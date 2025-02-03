@@ -1,5 +1,8 @@
 package com.bobocode.basics;
 
+
+import lombok.Getter;
+
 /**
  * {@link HelloAnnotationsExercise} is an exercise class that is marked with be corresponding @{@link Exercise}
  * annotation. The annotation value specifies exercise name "hello-annotation-basic". It does not specify any custom
@@ -13,5 +16,6 @@ package com.bobocode.basics;
  *
  * @author Taras Boychuk
  */
+@Exercise(value = "hello-annotation-basic")
 public class HelloAnnotationsExercise { // todo: mark class with the annotation according to the javadoc
 }
