@@ -155,7 +155,12 @@ public class CrazyLambdas {
      * @return a thread supplier
      */
     public static Supplier<Thread> runningThreadSupplier(Runnable runnable) {
-        throw new ExerciseNotCompletedException();
+        Supplier<Thread> supplier = () -> {
+            Thread thread = new Thread(runnable);
+            thread.start();
+            return thread;
+        };
+        return supplier;
     }
 
     /**
@@ -164,7 +169,8 @@ public class CrazyLambdas {
      * @return a runnable consumer
      */
     public static Consumer<Runnable> newThreadRunnableConsumer() {
-        throw new ExerciseNotCompletedException();
+        Consumer<Runnable> consumer = Runnable::run;
+        return consumer;
     }
 
     /**
@@ -174,7 +180,15 @@ public class CrazyLambdas {
      * @return a function that transforms runnable into a thread supplier
      */
     public static Function<Runnable, Supplier<Thread>> runnableToThreadSupplierFunction() {
-        throw new ExerciseNotCompletedException();
+        Function<Runnable, Supplier<Thread>> function = (runnable) -> {
+            Supplier<Thread> supplier = () -> {
+                Thread thread = new Thread(runnable);
+                thread.start();
+                return thread;
+            };
+            return supplier;
+        };
+        return function;
     }
 
     /**
@@ -187,7 +201,18 @@ public class CrazyLambdas {
      * @return a binary function that receiver predicate and function and compose them to create a new function
      */
     public static BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> functionToConditionalFunction() {
-        throw new ExerciseNotCompletedException();
+        BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> biFunction =
+                ((intUnaryOperator, intPredicate) -> {
+                    IntUnaryOperator intUnaryOperatorReturn = (x) -> {
+                        if(intPredicate.test(x)) {
+                            return intUnaryOperator.applyAsInt(x);
+                        } else {
+                            return x;
+                        }
+                    };
+                    return intUnaryOperatorReturn;
+                });
+        return biFunction;
     }
 
     /**
@@ -245,7 +270,7 @@ public class CrazyLambdas {
      * @return a supplier instance
      */
     public static Supplier<Supplier<Supplier<String>>> trickyWellDoneSupplier() {
-        throw new ExerciseNotCompletedException();
+        return () -> () -> () -> "WELL DONE!";
     }
 }
 
