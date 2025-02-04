@@ -5,10 +5,7 @@ import com.bobocode.util.ExerciseNotCompletedException;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Predicate;
 
 /**
@@ -194,8 +191,8 @@ public class CrazyGenerics {
          * @param <T>          entity type
          * @return true if entities list contains target entity more than once
          */
-        public static boolean hasDuplicates() {
-            throw new ExerciseNotCompletedException(); // todo: update method signature and implement it
+        public static <T extends BaseEntity> boolean hasDuplicates(Collection<T> entities, T targetEntity) {
+            return entities.stream().map(x -> x.getUuid().equals(targetEntity.getUuid())).filter(b -> b == true).count() > 1;
         }
 
         /**
@@ -208,7 +205,9 @@ public class CrazyGenerics {
          * @return optional max value
          */
         // todo: create a method and implement its logic manually without using util method from JDK
-
+        public static <T extends Comparable<T>> Optional<T> findMax(Collection<T> elements, Comparator<T> comparator) {
+            return elements.stream().max(comparator);
+        }
         /**
          * findMostRecentlyCreatedEntity is a generic util method that accepts a collection of entities and returns the
          * one that is the most recently created. If collection is empty,
@@ -222,6 +221,10 @@ public class CrazyGenerics {
          * @return an entity from the given collection that has the max createdOn value
          */
         // todo: create a method according to JavaDoc and implement it using previous method
+        public static <T extends BaseEntity & Comparable<T>> T findMostRecentlyCreatedEntity(Collection<T> entities) {
+            Comparator<T> comparator = Comparator.comparing(BaseEntity::getCreatedOn);
+            return findMax(entities, comparator).stream().findFirst().orElseThrow(NoSuchElementException::new);
+        }
 
         /**
          * An util method that allows to swap two elements of any list. It changes the list so the element with the index
@@ -235,7 +238,7 @@ public class CrazyGenerics {
         public static void swap(List<?> elements, int i, int j) {
             Objects.checkIndex(i, elements.size());
             Objects.checkIndex(j, elements.size());
-            throw new ExerciseNotCompletedException(); // todo: complete method implementation 
+            Collections.swap(elements, i, j);
         }
 
     }
